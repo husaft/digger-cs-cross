@@ -6,11 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GtkSharp" Version="3.24.24.34" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Digger.Classic\Digger.Classic.csproj" />
+    <PackageReference Include="Spectre.Console" Version="0.45.0" />
+    <PackageReference Include="Spectre.Console.ImageSharp" Version="0.45.0" />
   </ItemGroup>
 
 </Project>
