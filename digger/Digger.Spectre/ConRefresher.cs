@@ -29,7 +29,7 @@ namespace Digger.Spectre
 
         public static async Task ShowAll(CancellationTokenSource cts, ConDigger con)
         {
-            var keys = Task.Run(() => con.ReadKey(cts));
+            var keys = con.ReadKey(cts);
             var live = AnsiConsole.Live(Text.Empty)
                 .StartAsync(async ctx =>
                 {

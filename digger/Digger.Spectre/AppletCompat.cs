@@ -1,27 +1,63 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using Spectre.Console;
 
 namespace Digger.Spectre
 {
     internal abstract class AppletCompat
     {
+        private readonly Dictionary<int, long> _keyList;
+        private readonly Timer _keyTimer;
+        private const int KeyDelay = 120;
+
+        protected AppletCompat()
+        {
+            _keyList = new Dictionary<int, long>();
+            _keyTimer = new Timer(OnKeyTick, null, KeyDelay, KeyDelay);
+        }
+
         public string GetSubmitParameter() => null;
 
         public int GetSpeedParameter() => 66;
 
         public void RequestFocus()
         {
-            // NOP
+            /* NOP */
         }
 
-        internal void ReadKey(CancellationTokenSource cts)
+        private static long CurrentTicks => Environment.TickCount64;
+
+        private void OnKeyTick(object state)
+        {
+            foreach (var (key, value) in _keyList
+                         .OrderBy(k => k.Value)
+                         .Take(1)
+                         .ToArray())
+            {
+                if (CurrentTicks <= value + KeyDelay)
+                    continue;
+                _keyList.Remove(key);
+                KeyUp(key);
+            }
+        }
+
+        internal async Task ReadKey(CancellationTokenSource cts)
         {
             while (!cts.IsCancellationRequested)
             {
-                var key = Console.ReadKey(intercept: true);
-                var num = ConvertToLegacy(key);
+                var con = AnsiConsole.Console.Input;
+                var key = await con.ReadKeyAsync(intercept: true, cts.Token);
+                if (key == null)
+                    continue;
+                var num = ConvertToLegacy(key.Value);
                 if (num >= 0)
+                {
                     KeyDown(num);
+                    _keyList[num] = CurrentTicks;
+                }
             }
         }
 
