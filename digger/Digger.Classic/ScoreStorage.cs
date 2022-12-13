@@ -3,7 +3,7 @@ using System.IO;
 
 namespace DiggerClassic
 {
-    internal class ScoreStorage
+    internal sealed class ScoreStorage
     {
         public static void createInStorage(Scores mem)
         {

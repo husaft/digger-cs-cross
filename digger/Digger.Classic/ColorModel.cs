@@ -2,7 +2,7 @@ using Digger.API;
 
 namespace DiggerClassic
 {
-    public class ColorModel : IColorModel
+    public sealed class ColorModel : IColorModel
     {
         private readonly int _bits;
         private readonly int _size;

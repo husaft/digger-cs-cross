@@ -6,7 +6,7 @@ It was ported from C almost mechanically! */
 
 using System.Threading;
 
-public class Digger : IDigger {
+public sealed class Digger : IDigger {
 internal static int MAX_RATE = 200, MIN_RATE = 40;
 
 public int width = 320, height = 200, frametime = 66;

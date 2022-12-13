@@ -3,7 +3,7 @@ using Gtk;
 
 namespace Digger.GtkSharp
 {
-    public class GtkRefresher : IRefresher
+    public sealed class GtkRefresher : IRefresher
     {
         private readonly DrawingArea _area;
 

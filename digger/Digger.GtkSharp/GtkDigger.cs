@@ -3,7 +3,7 @@ using Digger.API;
 
 namespace Digger.GtkSharp
 {
-    internal class GtkDigger : AppletCompat, IFactory
+    internal sealed class GtkDigger : AppletCompat, IFactory
     {
         public IDigger _digger;
 
