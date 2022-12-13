@@ -1,5 +1,7 @@
 using Cairo;
 using Digger.API;
+using DiggerClassic;
+using Gdk;
 
 namespace Digger.GtkSharp
 {
@@ -20,10 +22,11 @@ namespace Digger.GtkSharp
 
             var w = pc.GetWidth();
             var h = pc.GetHeight();
-            var data = pc.GetPixels();
+            var data = pc.GetPixels().GetRgb24(pc.GetCurrentSource().Model);
 
             const int shift = 1;
 
+            /*
             for (var x = 0; x < w; x++)
             {
                 for (var y = 0; y < h; y++)
@@ -35,7 +38,12 @@ namespace Digger.GtkSharp
                     g.Fill();
                 }
             }
-            
+            */
+
+            using var picture = new Pixbuf(data, Colorspace.Rgb, false, 8, w, h, w * 3, null);
+            CairoHelper.SetSourcePixbuf(g, picture, shift, shift);
+            g.Paint();
+
             return false;
         }
 
