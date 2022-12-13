@@ -9,5 +9,7 @@ namespace Digger.API
         int[] GetPixels();
 
         IRefresher GetCurrentSource();
+
+        (int x, int y, bool vis) GetPlayer();
     }
 }

@@ -235,6 +235,7 @@ public int GetWidth() => width;
 public int GetHeight() => height;
 public int[] GetPixels() => pixels;
 public IRefresher GetCurrentSource() => currentSource;
+public (int x, int y, bool vis) GetPlayer() => (dig.diggerx, dig.diggery, dig.diggervisible);
 
 }
 }
